@@ -6,10 +6,6 @@ file(GLOB_RECURSE cpp-futile-engine_HEADERS "${cpp-futile-engine_SOURCE_DIR}/dap
 
 install(FILES ${cpp-futile-engine_HEADERS} DESTINATION include)
 
-add_library(cpp-futile-engine INTERFACE)
-target_sources(cpp-futile-engine INTERFACE ${cpp-futile-engine_HEADERS})
-target_link_libraries(cpp-futile-engine INTERFACE ${Boost_LIBRARIES})
-
-add_custom_target(cpp-futile-engine-src SOURCES ${cpp-futile-engine_HEADERS})
+add_executable(cpp-futile-engine main.cpp)
 
 GenerateSourceGroups(dapps)
