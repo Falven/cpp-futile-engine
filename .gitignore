@@ -1,0 +1,25 @@
+#CMake
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+CPackConfig.cmake
+CPackSourceConfig.cmake
+CTestTestfile.cmake
+*.dir
+
+#Visual Studio
+*.vcxproj
+*.vcxproj.filters
+*.sln
+*.suo
+*.sdf
+*.log
+*.tlog
+*.cache
+*.lastbuildstate
+*.exe
+*.pdb
+*.ilk
+
+#OS-X
+.DS_Store
