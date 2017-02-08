@@ -17,22 +17,14 @@ endif()
 
 if(WIN32)
 	add_definitions(-D_WIN32_WINNT=0x0501)
+	set(SDL2_PATH "C:\\Program Files\\SDL2-2.0.5")
+	set(SDL2_IMAGE_PATH "C:\\Program Files\\SDL2_image-2.0.1")
+	set(SDL2_TTF_PATH "C:\\Program Files\\SDL2_ttf-2.0.14")
 endif()
 
 find_package(SDL2 REQUIRED)
-if (NOT SDL2_FOUND)
-	message(FATAL_ERROR "Check to make sure you have built SDL2 libraries.")
-endif()
-
 find_package(SDL2_image REQUIRED)
-if (NOT SDL_IMAGE_FOUND)
-	message(FATAL_ERROR "Check to make sure you have built SDL2_image libraries.")
-endif()
-
 find_package(SDL2_ttf REQUIRED)
-if (NOT SDL_TTF_FOUND)
-	message(FATAL_ERROR "Check to make sure you have built SDL2_ttf libraries.")
-endif()
 
 include_directories(SYSTEM
 					${SDL2_INCLUDE_DIR}
