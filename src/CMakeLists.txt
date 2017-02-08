@@ -6,6 +6,8 @@ file(GLOB_RECURSE cpp-futile-engine_HEADERS "${cpp-futile-engine_SOURCE_DIR}/dap
 
 install(FILES ${cpp-futile-engine_HEADERS} DESTINATION include)
 
-add_executable(cpp-futile-engine main.cpp)
+add_executable(cpp-futile-engine main.cpp ${cpp-futile-engine_HEADERS})
 
-GenerateSourceGroups(dapps)
+target_link_libraries(cpp-futile-engine ${SDL2_LIBRARY}
+                                        ${SDL2_IMAGE_LIBRARIES}
+                                        ${SDL2_TTF_LIBRARIES})
