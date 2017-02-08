@@ -47,6 +47,7 @@ endif()
 enable_testing()
 
 add_subdirectory(src/)
+add_subdirectory(test/)
 
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_LIST_DIR}/License.txt")
