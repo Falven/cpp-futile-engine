@@ -2,7 +2,7 @@ include("${CMAKE_MACRO_PATH}/GenerateSourceGroups.cmake")
 
 include_directories("${${CMAKE_PROJECT_NAME}_SOURCE_DIR}")
 
-set(${CMAKE_PROJECT_NAME}_INCLUDES "${${CMAKE_PROJECT_NAME}_SOURCE_DIR}/include/${CMAKE_PROJECT_NAME}")
+set(${CMAKE_PROJECT_NAME}_INCLUDES "${PROJECT_SOURCE_DIR}/include/${CMAKE_PROJECT_NAME}")
 file(
     GLOB_RECURSE
     ${CMAKE_PROJECT_NAME}_HEADERS
@@ -20,19 +20,19 @@ target_link_libraries(cpp-futile-engine ${SDL2_LIBRARY}
 if(WIN32)
     file(
         GLOB_RECURSE
-        ${CMAKE_PROJECT_NAME}_EXTERNAL_LIBS
-        "${${CMAKE_PROJECT_NAME}_INCLUDES}/*.hpp" "${${CMAKE_PROJECT_NAME}_INCLUDES}/*.h"
+        ${CMAKE_PROJECT_NAME}_IMPLICIT_LINKED_LIBS
+        "${PROJECT_LIB_DIR}/*.dll"
     )
     add_custom_command(
         TARGET cpp-futile-engine POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${PROJECT_SOURCE_DIR}/libs/SDL2.dll"
+        "${CMAKE_PROJECT_NAME}_IMPLICIT_LINKED_LIBS"
         $<TARGET_FILE_DIR:cpp-futile-engine>
     )
 endif()
 
 set_property(TARGET cpp-futile-engine PROPERTY FOLDER "bin")
 
-install(TARGETS cpp-futile-engine RUNTIME DESTINATION ${PROJECT_BINARY_DIR}/bin)
+install(TARGETS cpp-futile-engine RUNTIME DESTINATION "${PROJECT_BINARY_DIR}/bin")
 
 GenerateSourceGroups(dapps)
