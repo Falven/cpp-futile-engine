@@ -10,10 +10,17 @@ set(
 	"${${CMAKE_PROJECT_NAME}_VERSION_MAJOR}.${${CMAKE_PROJECT_NAME}_VERSION_MINOR}.${${CMAKE_PROJECT_NAME}_VERSION_PATCH}"
 )
 
+set(${CMAKE_PROJECT_NAME}_HEADERS "include/${CMAKE_PROJECT_NAME}/")
+set(${CMAKE_PROJECT_NAME}_IMPLICITLY_LINKED_MODULES_DIR "${PROJECT_SOURCE_DIR}/libs" CACHE STRING "Directory containing dynamic libraries to be copied to output for implicit linking.")
+file(
+	GLOB_RECURSE
+	${CMAKE_PROJECT_NAME}_IMPLICITLY_LINKED_MODULES
+	"${${CMAKE_PROJECT_NAME}_IMPLICITLY_LINKED_MODULES_DIR}/*.dll" "${${CMAKE_PROJECT_NAME}_IMPLICITLY_LINKED_LIBS_DIR}/*.exe"
+)
+
 set(CMAKE_MACRO_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/macros" CACHE STRING "Directory containing reusable CMake macros.")
 set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Statically specifies what build type (configuration) will be built in this build tree. Possible values are empty, Debug, Release, RelWithDebInfo and MinSizeRel..")
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Whether to build shared or static libraries.")
-set(PROJECT_LIB_DIR "${PROJECT_SOURCE_DIR}/libs" CACHE STRING "Directory containing external dynamic libraries to be copied to output.")
 if(WIN32)
 	set(SDL2_PATH "C:\\Program Files\\SDL2-2.0.5")
 	set(SDL2_IMAGE_PATH "C:\\Program Files\\SDL2_image-2.0.1")
@@ -34,11 +41,11 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
-include_directories(SYSTEM
-					${SDL2_INCLUDE_DIR}
-                    ${SDL2_IMAGE_INCLUDE_DIR}
-                    ${SDL2_TTF_INCLUDE_DIR}
-)
+# Global includes.
+set(GLOBAL_INCLUDE_DIRS "")
+# Global libs.
+set(GLOBAL_LINKED_LIBS "")
+include_directories(SYSTEM ${GLOBAL_INCLUDE_DIRS})
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     set(CMAKE_VERBOSE_MAKEFILE true)
@@ -46,8 +53,15 @@ endif()
 
 enable_testing()
 
-add_subdirectory(src/)
-add_subdirectory(test/)
+file(
+	GLOB
+	PROJECT_MODULES_DIR
+	RELATIVE "${CMAKE_CURRENT_LIST_DIR}"
+	"modules/**/src" "modules/**/test"
+)
+foreach(module ${PROJECT_MODULES_DIR})
+  add_subdirectory(${module})
+endforeach()
 
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_LIST_DIR}/License.txt")
