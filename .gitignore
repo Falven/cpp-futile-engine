@@ -23,3 +23,5 @@ CTestTestfile.cmake
 
 #OS-X
 .DS_Store
+
+.vs/
