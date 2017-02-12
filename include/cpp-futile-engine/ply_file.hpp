@@ -1,4 +1,6 @@
+#include <iostream>
 #include <string>
+#include <boost/iostreams/device/mapped_file.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// <summary>	
@@ -25,7 +27,8 @@ public:
 
 	void read(const std::string ply_file_path)
 	{
-
+		boost::iostreams::mapped_file mapf(ply_file_path, boost::iostreams::mapped_file::readonly);
+		std::cout << "" << std::endl;
 	}
 
 	void write(const std::string ply_file_path)

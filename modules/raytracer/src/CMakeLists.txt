@@ -7,13 +7,4 @@ add_executable(${MODULE_NAME} "${${MODULE_NAME}_SOURCES}")
 
 target_link_libraries(${MODULE_NAME} ${${MODULE_NAME}_LINKED})
 
-if(WIN32)
-    add_custom_command(
-        TARGET ${MODULE_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${${CMAKE_PROJECT_NAME}_IMPLICITLY_LINKED_MODULES}"
-        $<TARGET_FILE_DIR:${MODULE_NAME}>
-    )
-endif()
-
 install(TARGETS ${MODULE_NAME} RUNTIME DESTINATION "${PROJECT_BINARY_DIR}/bin")
