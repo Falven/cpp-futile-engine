@@ -1,6 +1,13 @@
-#include <iostream>
-#include <string>
+#ifndef PLY_FILE_HPP
+#define PLY_FILE_HPP
+
 #include <boost/iostreams/device/mapped_file.hpp>
+#include <algorithm>  // for std::find
+#include <iostream>   // for std::cout
+#include <string>
+#include <cstring>
+
+#include "model.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// <summary>	
@@ -37,5 +44,7 @@ public:
 	}
 
 private:
-
+	model ply_model;
 };
+
+#endif

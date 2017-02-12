@@ -26,11 +26,9 @@ if(UNIX)
 	list(APPEND CMAKE_CXX_FLAGS "-std=c++14 -stdlib=libc++")
 endif()
 
-set(Boost_DEBUG OFF CACHE BOOL "Show boost debugging information.")
 set(Boost_USE_STATIC_LIBS ON CACHE BOOL "Whether to use shared or static boost libraries when building.")
-set(Boost_USE_STATIC_RUNTIME OFF CACHE BOOL "If enabled, searches for boost libraries linked against a static C++ standard library ('s' ABI tag). Defaults to OFF.")
 set(Boost_USE_MULTITHREADED ON CACHE BOOL "Whether to link to multi-threaded boost libraries when building.")
-find_package(Boost 1.63.0 REQUIRED)
+find_package(Boost 1.63.0 REQUIRED iostreams)
 
 if(WIN32)
 	set(SDL2_PATH "C:\\Program Files\\SDL2-2.0.5")
@@ -46,7 +44,8 @@ set(${CMAKE_PROJECT_NAME}_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/include/${CMAKE_PR
 file(GLOB_RECURSE ${CMAKE_PROJECT_NAME}_HEADERS "${${CMAKE_PROJECT_NAME}_INCLUDE_DIRS}/*.h" "${${CMAKE_PROJECT_NAME}_INCLUDE_DIRS}/*.hpp" "${${CMAKE_PROJECT_NAME}_INCLUDE_DIRS}/*.hxx" "${${CMAKE_PROJECT_NAME}_INCLUDE_DIRS}/*.hh" "${${CMAKE_PROJECT_NAME}_INCLUDE_DIRS}/*.h++")
 add_library(${CMAKE_PROJECT_NAME} INTERFACE)
 target_sources(${CMAKE_PROJECT_NAME} INTERFACE "${${CMAKE_PROJECT_NAME}_HEADERS}")
-target_include_directories(${CMAKE_PROJECT_NAME} INTERFACE SYSTEM "${Boost_INCLUDE_DIRS}")
+target_include_directories(${CMAKE_PROJECT_NAME} SYSTEM INTERFACE "${Boost_INCLUDE_DIRS}")
+target_link_libraries(${CMAKE_PROJECT_NAME} INTERFACE Boost::iostreams)
 install(FILES ${${CMAKE_PROJECT_NAME}_HEADERS} DESTINATION "include/${CMAKE_PROJECT_NAME}")
 
 if(WIN32)

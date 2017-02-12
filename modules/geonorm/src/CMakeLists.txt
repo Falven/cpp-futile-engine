@@ -4,6 +4,6 @@ file(GLOB_RECURSE ${MODULE_NAME}_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.c" "${CM
 add_executable(${MODULE_NAME} "${${MODULE_NAME}_SOURCES}")
 target_include_directories(${MODULE_NAME} SYSTEM PUBLIC "${Boost_INCLUDE_DIRS}")
 target_include_directories(${MODULE_NAME} PUBLIC "${${CMAKE_PROJECT_NAME}_INCLUDE_DIRS}")
-target_link_libraries(${MODULE_NAME} "${CMAKE_PROJECT_NAME}" "${Boost_LIBRARIES}")
+target_link_libraries(${MODULE_NAME} "${CMAKE_PROJECT_NAME}")
 
 install(TARGETS ${MODULE_NAME} RUNTIME DESTINATION "${PROJECT_BINARY_DIR}/bin")
