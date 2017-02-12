@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
-if(CMAKE_BUILD_TYPE MATCHES Debug)
+if(CMAKE_BUILD_TYPE MATCHES "Debug")
     set(CMAKE_VERBOSE_MAKEFILE true)
 endif()
 
